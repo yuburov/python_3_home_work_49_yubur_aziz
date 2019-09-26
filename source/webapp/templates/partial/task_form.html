@@ -1,0 +1,21 @@
+{% load widget_tweaks %}
+{% csrf_token %}
+
+{% for error in  form.non_field_errors %}
+    <p class="form-error">{{ error }}</p>
+{% endfor %}
+
+{% for field in form %}
+    <label class="form-text" for="{{ field.id_for_label }}">{{ field.label }}
+        {% if field.field.required %}<span>*</span>{% endif %}</label>
+    {% if field.errors %}
+        <p>{{ field|add_class:'field-error btn btn-light form-error' }}</p>
+    {% else %}
+        <p>{{ field|add_class:'btn btn-light text-left' }}</p>
+    {% endif %}
+    {% for error in field.errors %}
+        <p class="form-error">{{ error }}</p>
+    {% endfor %}
+{% endfor %}
+
+<p><input class="btn btn-success"  type="submit" value="{{ button_text }}"></p>

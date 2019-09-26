@@ -1,0 +1,61 @@
+body{
+    font-family: Arial, sans-serif;
+    background-color: lightgrey;
+}
+.card{
+    margin-left: 100px;
+    background-color: lightblue;
+}
+.zagolovok{
+    margin-left: 390px;
+}
+.card-text{
+    margin-right: 50px;
+}
+.navbar{
+    margin-bottom: 35px;
+}
+.icon{
+    float: right;
+}
+
+.form-error {
+    color: red;
+    font-size: 12px;
+    margin: 5px 0 0 0
+}
+
+.field-error {
+    border: solid 1px red;
+    box-shadow: red 0 0 3px;
+
+}
+.form-text{
+    margin-top: 20px;
+}
+span{
+    color: red;
+    font-weight: 600;
+}
+.btn.btn-success{
+    width: 410px;
+}
+.btn-floating{
+    margin-left: 450px;
+    margin-bottom: 30px;
+}
+
+.card.w-75{
+    margin-left: 110px;
+}
+.btn-danger{
+    width: 100px;
+    margin-top: 20px;
+}
+.no{
+    width: 100px;
+}
+.card-body {
+    background-color: lightblue;
+    border: 2px solid black;
+}
