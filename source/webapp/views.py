@@ -123,14 +123,16 @@ class Type_update_view(View):
 class Type_delete_view(View):
     def get(self,request, *args, **kwargs):
         type_pk = kwargs.get('pk')
-        type = get_object_or_404(Task, pk=type_pk)
+        type = get_object_or_404(Type, pk=type_pk)
         return render(request, 'delete_type.html', context={'type': type})
     def post(self, request, *args, **kwargs):
         type_pk = kwargs.get('pk')
-        type = get_object_or_404(Task, pk=type_pk)
-        type.delete()
-        return redirect('type_index')
-
+        type = get_object_or_404(Type, pk=type_pk)
+        try:
+            type.delete()
+            return redirect('type_index')
+        except:
+            raise Exception('Can not be deleted')
 
 class StatusIndexView(TemplateView):
     template_name = 'status_index.html'
@@ -176,10 +178,13 @@ class Status_update_view(View):
 class Status_delete_view(View):
     def get(self,request, *args, **kwargs):
         status_pk = kwargs.get('pk')
-        status = get_object_or_404(Task, pk=status_pk)
+        status = get_object_or_404(Status, pk=status_pk)
         return render(request, 'delete_status.html', context={'status': status})
     def post(self, request, *args, **kwargs):
         status_pk = kwargs.get('pk')
-        status = get_object_or_404(Task, pk=status_pk)
-        status.delete()
-        return redirect('status_index')
+        status = get_object_or_404(Status, pk=status_pk)
+        try:
+            status.delete()
+            return redirect('status_index')
+        except:
+            raise Exception('Can not be deleted')
