@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block menu %}
+        <li class="nav-item">
+            <a href="{% url 'status_create' %}" class="nav-link">Create</a>
+        </li>
+{% endblock %}
+{% block content %}
+    <h1 class="zagolovok mt-3 mb-3">Statuses</h1>
+    {% for status in statuses %}
+        <p>Status - {{ status.status }} <a class="icon mr-2"
+                                           href="{% url 'status_update' status.pk %}"><i
+                class="fas fa-edit"></i></a><a class="icon mr-2" href="{% url 'status_delete' status.pk %}"><i
+                class="fas fa-trash-alt"></i></a></p>
+    {% endfor %}
+{% endblock %}
