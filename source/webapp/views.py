@@ -6,7 +6,7 @@ from webapp.models import Task, Status, Type
 
 
 class IndexView(TemplateView):
-    template_name = 'index.html'
+    template_name = 'task/index.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -15,7 +15,7 @@ class IndexView(TemplateView):
 
 
 class TaskView(TemplateView):
-    template_name = 'task.html'
+    template_name = 'task/task.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -27,7 +27,7 @@ class TaskView(TemplateView):
 class Task_create_view(View):
     def get(self, request, *args, **kwargs):
             form = TaskForm()
-            return render(request, 'create.html', context={'form': form})
+            return render(request, 'task/create.html', context={'form': form})
     def post(self, request, *args, **kwargs):
             form = TaskForm(data=request.POST)
             if form.is_valid():
@@ -40,7 +40,7 @@ class Task_create_view(View):
                 )
                 return redirect('index')
             else:
-                return render(request, 'create.html', context={'form': form})
+                return render(request, 'task/create.html', context={'form': form})
 
 class Task_update_view(View):
     def get(self,request,*args, **kwargs):
@@ -52,7 +52,7 @@ class Task_update_view(View):
             'status': task.status_id,
             'type': task.type_id
         })
-        return render(request, 'update.html', context={'form': form, 'task': task})
+        return render(request, 'task/update.html', context={'form': form, 'task': task})
     def post(self,request, *args, **kwargs):
         task_pk = kwargs.get('pk')
         task = get_object_or_404(Task, pk=task_pk)
@@ -65,13 +65,13 @@ class Task_update_view(View):
             task.save()
             return redirect('index')
         else:
-            return render(request, 'update.html', context={'form': form, 'task': task})
+            return render(request, 'task/update.html', context={'form': form, 'task': task})
 
 class Task_delete_view(View):
     def get(self,request, *args, **kwargs):
         task_pk = kwargs.get('pk')
         task = get_object_or_404(Task, pk=task_pk)
-        return render(request, 'delete.html', context={'task': task})
+        return render(request, 'task/delete.html', context={'task': task})
     def post(self, request, *args, **kwargs):
         task_pk = kwargs.get('pk')
         task = get_object_or_404(Task, pk=task_pk)
@@ -80,7 +80,7 @@ class Task_delete_view(View):
 
 
 class TypeIndexView(TemplateView):
-    template_name = 'type_index.html'
+    template_name = 'type/type_index.html'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['types'] = Type.objects.all()
@@ -90,7 +90,7 @@ class TypeIndexView(TemplateView):
 class Type_create_view(View):
     def get(self, request, *args, **kwargs):
             form = TypeForm()
-            return render(request, 'create_type.html', context={'form': form})
+            return render(request, 'type/create_type.html', context={'form': form})
     def post(self, request, *args, **kwargs):
             form = TypeForm(data=request.POST)
             if form.is_valid():
@@ -99,7 +99,7 @@ class Type_create_view(View):
                 )
                 return redirect('type_index')
             else:
-                return render(request, 'create_type.html', context={'form': form})
+                return render(request, 'type/create_type.html', context={'form': form})
 
 class Type_update_view(View):
     def get(self,request,*args, **kwargs):
@@ -108,7 +108,7 @@ class Type_update_view(View):
         form = TypeForm(data={
             'type': type.type
         })
-        return render(request, 'update_type.html', context={'form': form, 'type': type})
+        return render(request, 'type/update_type.html', context={'form': form, 'type': type})
     def post(self,request, *args, **kwargs):
         type_pk = kwargs.get('pk')
         type = get_object_or_404(Type, pk=type_pk)
@@ -118,13 +118,13 @@ class Type_update_view(View):
             type.save()
             return redirect('type_index')
         else:
-            return render(request, 'update_type.html', context={'form': form, 'type': type})
+            return render(request, 'type/update_type.html', context={'form': form, 'type': type})
 
 class Type_delete_view(View):
     def get(self,request, *args, **kwargs):
         type_pk = kwargs.get('pk')
         type = get_object_or_404(Type, pk=type_pk)
-        return render(request, 'delete_type.html', context={'type': type})
+        return render(request, 'type/delete_type.html', context={'type': type})
     def post(self, request, *args, **kwargs):
         type_pk = kwargs.get('pk')
         type = get_object_or_404(Type, pk=type_pk)
@@ -135,7 +135,7 @@ class Type_delete_view(View):
             raise Exception('Can not be deleted')
 
 class StatusIndexView(TemplateView):
-    template_name = 'status_index.html'
+    template_name = 'status/status_index.html'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['statuses'] = Status.objects.all()
@@ -145,7 +145,7 @@ class StatusIndexView(TemplateView):
 class Status_create_view(View):
     def get(self, request, *args, **kwargs):
             form = StatusForm()
-            return render(request, 'create_status.html', context={'form': form})
+            return render(request, 'status/create_status.html', context={'form': form})
     def post(self, request, *args, **kwargs):
             form = StatusForm(data=request.POST)
             if form.is_valid():
@@ -154,7 +154,7 @@ class Status_create_view(View):
                 )
                 return redirect('status_index')
             else:
-                return render(request, 'create_status.html', context={'form': form})
+                return render(request, 'status/create_status.html', context={'form': form})
 
 class Status_update_view(View):
     def get(self,request,*args, **kwargs):
@@ -163,7 +163,7 @@ class Status_update_view(View):
         form = StatusForm(data={
             'status': status.status,
         })
-        return render(request, 'update_status.html', context={'form': form, 'status': status})
+        return render(request, 'status/update_status.html', context={'form': form, 'status': status})
     def post(self,request, *args, **kwargs):
         status_pk = kwargs.get('pk')
         status = get_object_or_404(Status, pk=status_pk)
@@ -173,13 +173,13 @@ class Status_update_view(View):
             status.save()
             return redirect('status_index')
         else:
-            return render(request, 'update_status.html', context={'form': form, 'status': status})
+            return render(request, 'status/update_status.html', context={'form': form, 'status': status})
 
 class Status_delete_view(View):
     def get(self,request, *args, **kwargs):
         status_pk = kwargs.get('pk')
         status = get_object_or_404(Status, pk=status_pk)
-        return render(request, 'delete_status.html', context={'status': status})
+        return render(request, 'status/delete_status.html', context={'status': status})
     def post(self, request, *args, **kwargs):
         status_pk = kwargs.get('pk')
         status = get_object_or_404(Status, pk=status_pk)
