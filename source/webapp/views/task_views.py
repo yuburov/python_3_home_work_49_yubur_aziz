@@ -1,17 +1,14 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 from django.views.generic.base import View
 from webapp.forms import TaskForm
 from webapp.models import Task
 
 
-class IndexView(TemplateView):
+class IndexView(ListView):
     template_name = 'task/index.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['tasks'] = Task.objects.all()
-        return context
+    context_object_name = 'tasks'
+    model = Task
 
 
 class TaskView(TemplateView):
