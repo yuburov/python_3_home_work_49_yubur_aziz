@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import TemplateView, ListView
+from django.urls import reverse
+from django.views.generic import ListView, DetailView, CreateView
 from django.views.generic.base import View
 from webapp.forms import TaskForm
 from webapp.models import Task
-from webapp.views.base_view import DetailView
+# from webapp.views.base_view import DetailView
 
 
 class IndexView(ListView):
@@ -19,24 +20,31 @@ class TaskView(DetailView):
     context_key = 'task'
     model = Task
 
+class Task_create_view(CreateView):
+    template_name = 'task/create.html'
+    form_class = TaskForm
+    model = Task
 
-class Task_create_view(View):
-    def get(self, request, *args, **kwargs):
-            form = TaskForm()
-            return render(request, 'task/create.html', context={'form': form})
-    def post(self, request, *args, **kwargs):
-            form = TaskForm(data=request.POST)
-            if form.is_valid():
-                Task.objects.create(
-                    summary=form.cleaned_data['summary'],
-                    description=form.cleaned_data['description'],
-                    status=form.cleaned_data['status'],
-                    type=form.cleaned_data['type']
+    def get_success_url(self):
+        return reverse('task_view', kwargs={'pk': self.object.pk})
 
-                )
-                return redirect('index')
-            else:
-                return render(request, 'task/create.html', context={'form': form})
+# class Task_create_view(View):
+#     def get(self, request, *args, **kwargs):
+#             form = TaskForm()
+#             return render(request, 'task/create.html', context={'form': form})
+#     def post(self, request, *args, **kwargs):
+#             form = TaskForm(data=request.POST)
+#             if form.is_valid():
+#                 Task.objects.create(
+#                     summary=form.cleaned_data['summary'],
+#                     description=form.cleaned_data['description'],
+#                     status=form.cleaned_data['status'],
+#                     type=form.cleaned_data['type']
+#
+#                 )
+#                 return redirect('index')
+#             else:
+#                 return render(request, 'task/create.html', context={'form': form})
 
 class Task_update_view(View):
     def get(self,request,*args, **kwargs):

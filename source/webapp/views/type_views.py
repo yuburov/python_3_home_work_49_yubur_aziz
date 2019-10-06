@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import TemplateView, ListView
+from django.urls import reverse
+from django.views.generic import TemplateView, ListView, CreateView
 from django.views.generic.base import View
 from webapp.forms import TypeForm
 from webapp.models import Type
@@ -11,19 +12,13 @@ class TypeIndexView(ListView):
     model = Type
 
 
-class Type_create_view(View):
-    def get(self, request, *args, **kwargs):
-            form = TypeForm()
-            return render(request, 'type/create_type.html', context={'form': form})
-    def post(self, request, *args, **kwargs):
-            form = TypeForm(data=request.POST)
-            if form.is_valid():
-                Type.objects.create(
-                    type=form.cleaned_data['type']
-                )
-                return redirect('type_index')
-            else:
-                return render(request, 'type/create_type.html', context={'form': form})
+class Type_create_view(CreateView):
+    template_name = 'type/create_type.html'
+    form_class = TypeForm
+    model = Type
+
+    def get_success_url(self):
+        return reverse('type_index')
 
 class Type_update_view(View):
     def get(self,request,*args, **kwargs):
