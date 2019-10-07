@@ -41,6 +41,31 @@ class UpdateView(View):
     def get_redirect_url(self):
         return self.redirect_url
 
+class DeleteView(View):
+    template_name = None
+    model = None
+    key_kwarg = 'pk'
+    key = 'object'
+    redirect_url = ''
+
+    def get(self, request, *args, **kwargs):
+        pk = kwargs.get(self.key_kwarg)
+        obj = get_object_or_404(self.model, pk=pk)
+        return render(request, self.template_name, context={self.key: obj})
+
+    def post(self, request, *args, **kwargs):
+        pk = kwargs.get(self.key_kwarg)
+        obj = get_object_or_404(self.model, pk=pk)
+        try:
+            self.object = obj.delete()
+            return redirect(self.get_redirect_url())
+        except:
+            raise Exception('Can not be deleted')
+
+
+    def get_redirect_url(self):
+        return self.redirect_url
+
 
 
 

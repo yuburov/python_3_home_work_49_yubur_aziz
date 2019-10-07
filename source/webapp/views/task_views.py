@@ -5,6 +5,7 @@ from django.views.generic.base import View
 from webapp.forms import TaskForm
 from webapp.models import Task
 from .base_view import UpdateView
+from .base_view import DeleteView
 # from webapp.views.base_view import DetailView
 
 
@@ -40,13 +41,10 @@ class Task_update_view(UpdateView):
         return reverse('task_view', kwargs={'pk': self.object.pk})
 
 
-class Task_delete_view(View):
-    def get(self,request, *args, **kwargs):
-        task_pk = kwargs.get('pk')
-        task = get_object_or_404(Task, pk=task_pk)
-        return render(request, 'task/delete.html', context={'task': task})
-    def post(self, request, *args, **kwargs):
-        task_pk = kwargs.get('pk')
-        task = get_object_or_404(Task, pk=task_pk)
-        task.delete()
-        return redirect('index')
+class Task_delete_view(DeleteView):
+    template_name = 'task/delete.html'
+    key = 'task'
+    model = Task
+
+    def get_redirect_url(self):
+        return reverse('index')

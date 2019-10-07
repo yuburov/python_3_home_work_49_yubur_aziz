@@ -5,6 +5,7 @@ from django.views.generic import TemplateView, ListView, CreateView
 from django.views.generic.base import View
 from webapp.forms import StatusForm
 from webapp.models import Status
+from .base_view import UpdateView, DeleteView
 
 class StatusIndexView(ListView):
     template_name = 'status/status_index.html'
@@ -20,35 +21,19 @@ class Status_create_view(CreateView):
     def get_success_url(self):
         return reverse('status_index')
 
-class Status_update_view(View):
-    def get(self,request,*args, **kwargs):
-        status_pk = kwargs.get('pk')
-        status = get_object_or_404(Status, pk=status_pk)
-        form = StatusForm(data={
-            'status': status.status,
-        })
-        return render(request, 'status/update_status.html', context={'form': form, 'status': status})
-    def post(self,request, *args, **kwargs):
-        status_pk = kwargs.get('pk')
-        status = get_object_or_404(Status, pk=status_pk)
-        form = StatusForm(data=request.POST)
-        if form.is_valid():
-            status.status = form.cleaned_data['status']
-            status.save()
-            return redirect('status_index')
-        else:
-            return render(request, 'status/update_status.html', context={'form': form, 'status': status})
+class Status_update_view(UpdateView):
+    template_name = 'status/update_status.html'
+    form_class = StatusForm
+    model = Status
+    key = 'status'
 
-class Status_delete_view(View):
-    def get(self,request, *args, **kwargs):
-        status_pk = kwargs.get('pk')
-        status = get_object_or_404(Status, pk=status_pk)
-        return render(request, 'status/delete_status.html', context={'status': status})
-    def post(self, request, *args, **kwargs):
-        status_pk = kwargs.get('pk')
-        status = get_object_or_404(Status, pk=status_pk)
-        try:
-            status.delete()
-            return redirect('status_index')
-        except:
-            raise Exception('Can not be deleted')
+    def get_redirect_url(self):
+        return reverse('status_index')
+
+class Status_delete_view(DeleteView):
+    template_name = 'status/delete_status.html'
+    key = 'status'
+    model = Status
+
+    def get_redirect_url(self):
+        return reverse('status_index')
