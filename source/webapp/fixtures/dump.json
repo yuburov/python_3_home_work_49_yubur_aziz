@@ -7,7 +7,8 @@
     "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est.",
     "status": 1,
     "type": 1,
-    "date_create": "2019-09-25T14:51:56.733Z"
+    "date_create": "2019-09-25T14:51:56.733Z",
+    "project": 1
   }
 },
 {
@@ -18,7 +19,8 @@
     "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.",
     "status": 2,
     "type": 3,
-    "date_create": "2019-09-25T14:53:03.017Z"
+    "date_create": "2019-09-25T14:53:03.017Z",
+    "project": 2
   }
 },
 {
@@ -29,29 +31,56 @@
     "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas",
     "status": 3,
     "type": 2,
-    "date_create": "2019-09-25T14:53:28.190Z"
+    "date_create": "2019-09-25T14:53:28.190Z",
+    "project": 4
   }
 },
 {
   "model": "webapp.task",
-  "pk": 4,
+  "pk": 8,
   "fields": {
-    "summary": "Task 4",
-    "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptate.",
+    "summary": "Task 6",
+    "description": "dfss df s gs sg sg sg gh fd hf hhfdh dh hd sad a  dad",
     "status": 1,
-    "type": 3,
-    "date_create": "2019-09-25T14:53:57.641Z"
+    "type": 1,
+    "date_create": "2019-09-26T07:23:39.790Z",
+    "project": 3
   }
 },
 {
   "model": "webapp.task",
-  "pk": 5,
+  "pk": 11,
   "fields": {
-    "summary": "Task 5",
-    "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores",
+    "summary": "Taks 7",
+    "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est.",
     "status": 2,
-    "type": 1,
-    "date_create": "2019-09-25T14:54:24.954Z"
+    "type": 4,
+    "date_create": "2019-09-26T10:34:46.242Z",
+    "project": 1
+  }
+},
+{
+  "model": "webapp.task",
+  "pk": 12,
+  "fields": {
+    "summary": "Task 44",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias aliquam aspernatur aut culpa distinctio dolorem dolorum eos hic illo iusto laboriosam natus, nisi nobis nulla perferendis praesentium provident reprehenderit, totam veniam vitae? Accusamus.",
+    "status": 2,
+    "type": 2,
+    "date_create": "2019-10-02T05:55:53.046Z",
+    "project": 2
+  }
+},
+{
+  "model": "webapp.task",
+  "pk": 13,
+  "fields": {
+    "summary": "Task 33",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias aliquam aspernatur aut culpa distinctio dolorem dolorum eos hic illo iusto laboriosam natus, nisi nobis nulla perferendis praesentium provident",
+    "status": 3,
+    "type": 3,
+    "date_create": "2019-10-02T06:00:25.763Z",
+    "project": 1
   }
 },
 {
@@ -76,6 +105,13 @@
   }
 },
 {
+  "model": "webapp.status",
+  "pk": 4,
+  "fields": {
+    "status": "Pause"
+  }
+},
+{
   "model": "webapp.type",
   "pk": 1,
   "fields": {
@@ -97,11 +133,58 @@
   }
 },
 {
+  "model": "webapp.type",
+  "pk": 4,
+  "fields": {
+    "type": "research"
+  }
+},
+{
+  "model": "webapp.project",
+  "pk": 1,
+  "fields": {
+    "name": "Project 1",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, alias aliquid consequatur dolorum eligendi est in, labore magnam pariatur placeat quaerat recusandae reprehenderit voluptas. Cum deserunt fugit minus quae quam",
+    "create_date": "2019-10-09T09:16:14.905Z",
+    "update_date": "2019-10-09T09:16:14.905Z"
+  }
+},
+{
+  "model": "webapp.project",
+  "pk": 2,
+  "fields": {
+    "name": "Project 2",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, alias aliquid consequatur dolorum eligendi est in, labore magnam pariatur placeat quaerat recusandae reprehenderit voluptas. Cum deserunt fugit",
+    "create_date": "2019-10-09T09:16:21.695Z",
+    "update_date": "2019-10-09T09:16:37.440Z"
+  }
+},
+{
+  "model": "webapp.project",
+  "pk": 3,
+  "fields": {
+    "name": "Project 3",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, alias aliquid consequatur dolorum eligendi est in, labore magnam pariatur placeat quaerat recusandae",
+    "create_date": "2019-10-09T09:16:53.582Z",
+    "update_date": "2019-10-09T09:16:53.582Z"
+  }
+},
+{
+  "model": "webapp.project",
+  "pk": 4,
+  "fields": {
+    "name": "Project 4",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, alias aliquid consequatur dolorum eligendi est in, labore magnam pariatur placeat quaerat recusandae reprehenderit voluptas. Cum deserunt fugit minus",
+    "create_date": "2019-10-09T09:17:23.531Z",
+    "update_date": "2019-10-09T09:17:23.531Z"
+  }
+},
+{
   "model": "auth.user",
   "pk": 1,
   "fields": {
     "password": "pbkdf2_sha256$150000$p6iIs720po15$QvMZ60KoAC0VrEDiapthEEwN4hd4tA3iS5Pn+xfSzaM=",
-    "last_login": "2019-09-25T14:45:17.471Z",
+    "last_login": "2019-10-09T08:57:05.423Z",
     "is_superuser": true,
     "username": "admin",
     "first_name": "",
