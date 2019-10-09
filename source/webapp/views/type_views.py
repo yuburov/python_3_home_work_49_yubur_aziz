@@ -1,10 +1,7 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import reverse
-from django.views.generic import TemplateView, ListView, CreateView
-from django.views.generic.base import View
+from django.urls import reverse, reverse_lazy
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from webapp.forms import TypeForm
 from webapp.models import Type
-from .base_view import UpdateView, DeleteView
 
 
 class TypeIndexView(ListView):
@@ -25,15 +22,13 @@ class Type_update_view(UpdateView):
     template_name = 'type/update_type.html'
     form_class = TypeForm
     model = Type
-    key = 'type'
+    context_object_name = 'type'
 
-    def get_redirect_url(self):
+    def get_success_url(self):
         return reverse('type_index')
 
 class Type_delete_view(DeleteView):
     template_name = 'type/delete_type.html'
-    key = 'type'
+    context_object_name = 'type'
     model = Type
-
-    def get_redirect_url(self):
-        return reverse('type_index')
+    success_url = reverse_lazy('type_index')
