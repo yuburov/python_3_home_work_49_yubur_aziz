@@ -1,10 +1,8 @@
 from django.core.paginator import Paginator
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-# from webapp.forms import ProjectForm
-from webapp.forms import ProjectForm, TaskForm, ProjectTaskForm
-from webapp.models import Project, Task
-
+from webapp.forms import ProjectForm, ProjectTaskForm
+from webapp.models import Project
 
 class ProjectIndexView(ListView):
     template_name = 'project/index.html'
@@ -23,10 +21,10 @@ class ProjectView(DetailView):
         context = super().get_context_data(**kwargs)
         context['form'] = ProjectTaskForm()
         tasks = context['projects'].tasks.order_by('-date_create')
-        self.paginate_comments_to_context(tasks, context)
+        self.paginate_tasks_to_context(tasks, context)
         return context
 
-    def paginate_comments_to_context(self, tasks, context):
+    def paginate_tasks_to_context(self, tasks, context):
         paginator = Paginator(tasks, 3, 0)
         page_number = self.request.GET.get('page', 1)
         page = paginator.get_page(page_number)
