@@ -2,10 +2,10 @@
 
 {% block title %}{{ task.summary }}{% endblock %}
 
-{#{% block menu %}#}
+{% block menu %}
 {#    <li><a href="{% url "article_update" article.pk %}">Edit</a></li>#}
 {#    <li><a href="{% url "article_delete" article.pk %}">Delete</a></li>#}
-{#{% endblock %}#}
+{% endblock %}
 
 {% block content %}
     <h1 class="mt-2">{{ task.summary }}</h1>

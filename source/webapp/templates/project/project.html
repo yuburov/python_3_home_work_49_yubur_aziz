@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ projects.name }}{% endblock %}
+
+{% block menu %}
+     <li class="nav-item">
+        <a href="{% url 'project_update' projects.pk %}" class="nav-link">Edit</a>
+    </li>
+    <li class="nav-item">
+        <a href="{% url 'project_delete' projects.pk %}" class="nav-link">Delete</a>
+    </li>
+{% endblock %}
+
+{% block content %}
+    <h1 class="mt-2"> More information about {{ projects.name }}</h1>
+    <p><b>Created at {{ projects.create_date|date:'d.m.Y H:i:s' }}</b></p>
+    <div class="pre">{{ projects.description }}</div>
+    <hr/>
+    <h3 class="mt-5 text-center">Tasks:</h3>
+    {% if is_paginated %}
+        {% include 'partial/pagination.html' %}
+    {% endif %}
+
+    <div class="task-list">
+        {% for task in tasks %}
+            <div class="task">
+                <p><b>{{ task.summary }} created at {{ task.date_create|date:'d.m.Y H:i:s' }}</b></p>
+                <div class="pre">{{ task.description }}</div>
+                    <p class="comment-links">
+                        <a href="{% url 'task_update' task.pk %}">Edit</a>
+                        <a href="{% url 'task_delete' task.pk %}">Delete</a>
+                    </p>
+            </div>
+        {% empty %}
+            <p>No tasks yet.</p>
+        {% endfor %}
+    </div>
+    {% if is_paginated %}
+        {% include 'partial/pagination.html' %}
+    {% endif %}
+{% endblock %}

@@ -11,7 +11,7 @@ class StatusIndexView(ListView):
     model = Status
 
 
-class Status_create_view(CreateView):
+class StatusCreateView(CreateView):
     template_name = 'status/create_status.html'
     form_class = StatusForm
     model = Status
@@ -19,7 +19,7 @@ class Status_create_view(CreateView):
     def get_success_url(self):
         return reverse('status_index')
 
-class Status_update_view(UpdateView):
+class StatusUpdateView(UpdateView):
     template_name = 'status/update_status.html'
     form_class = StatusForm
     model = Status
@@ -28,7 +28,7 @@ class Status_update_view(UpdateView):
     def get_success_url(self):
         return reverse('status_index')
 
-class Status_delete_view(DeleteView):
+class StatusDeleteView(DeleteView):
     template_name = 'status/delete_status.html'
     context_object_name = 'status'
     model = Status

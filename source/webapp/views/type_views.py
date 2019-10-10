@@ -10,7 +10,7 @@ class TypeIndexView(ListView):
     model = Type
 
 
-class Type_create_view(CreateView):
+class TypeCreateView(CreateView):
     template_name = 'type/create_type.html'
     form_class = TypeForm
     model = Type
@@ -18,7 +18,7 @@ class Type_create_view(CreateView):
     def get_success_url(self):
         return reverse('type_index')
 
-class Type_update_view(UpdateView):
+class TypeUpdateView(UpdateView):
     template_name = 'type/update_type.html'
     form_class = TypeForm
     model = Type
@@ -27,7 +27,7 @@ class Type_update_view(UpdateView):
     def get_success_url(self):
         return reverse('type_index')
 
-class Type_delete_view(DeleteView):
+class TypeDeleteView(DeleteView):
     template_name = 'type/delete_type.html'
     context_object_name = 'type'
     model = Type

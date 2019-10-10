@@ -20,7 +20,7 @@ class TaskView(DetailView):
     context_key = 'task'
     model = Task
 
-class Task_create_view(CreateView):
+class TaskCreateView(CreateView):
     template_name = 'task/create.html'
     form_class = TaskForm
     model = Task
@@ -29,7 +29,7 @@ class Task_create_view(CreateView):
         return reverse('task_view', kwargs={'pk': self.object.pk})
 
 
-class Task_update_view(UpdateView):
+class TaskUpdateView(UpdateView):
     template_name = 'task/update.html'
     form_class = TaskForm
     model = Task
@@ -39,7 +39,7 @@ class Task_update_view(UpdateView):
         return reverse('task_view', kwargs={'pk': self.object.pk})
 
 
-class Task_delete_view(DeleteView):
+class TaskDeleteView(DeleteView):
     template_name = 'task/delete.html'
     context_object_name = 'task'
     model = Task

@@ -16,26 +16,30 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from webapp.views import IndexView, TaskView, Task_create_view, Task_update_view, Task_delete_view, StatusIndexView, \
-    Status_create_view, Status_update_view, Status_delete_view, TypeIndexView, Type_create_view, Type_update_view, \
-    Type_delete_view
+from webapp.views import IndexView, TaskView, TaskCreateView, TaskUpdateView, TaskDeleteView, StatusIndexView, \
+    StatusCreateView, StatusUpdateView, StatusDeleteView, TypeIndexView, TypeCreateView, TypeUpdateView, \
+    TypeDeleteView
+from webapp.views.project_views import ProjectIndexView, ProjectView, ProjectCreateView, ProjectUpdateView, \
+    ProjectDeleteView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', IndexView.as_view(), name='index'),
     path('task/<int:pk>/', TaskView.as_view(), name='task_view'),
-    path('task/create/', Task_create_view.as_view(), name='task_create'),
-    path('task/<int:pk>/edit/', Task_update_view.as_view(), name='task_update'),
-    path('task/<int:pk>/delete', Task_delete_view.as_view(), name='task_delete'),
+    path('task/create/', TaskCreateView.as_view(), name='task_create'),
+    path('task/<int:pk>/edit/', TaskUpdateView.as_view(), name='task_update'),
+    path('task/<int:pk>/delete', TaskDeleteView.as_view(), name='task_delete'),
     path('statuses/', StatusIndexView.as_view(), name='status_index'),
-    path('status/create/', Status_create_view.as_view(), name='status_create'),
-    path('status/<int:pk>/edit/', Status_update_view.as_view(), name='status_update'),
-    path('status/<int:pk>/delete', Status_delete_view.as_view(), name='status_delete'),
-
+    path('status/create/', StatusCreateView.as_view(), name='status_create'),
+    path('status/<int:pk>/edit/', StatusUpdateView.as_view(), name='status_update'),
+    path('status/<int:pk>/delete', StatusDeleteView.as_view(), name='status_delete'),
     path('types/', TypeIndexView.as_view(), name='type_index'),
-    path('type/create/', Type_create_view.as_view(), name='type_create'),
-    path('type/<int:pk>/edit/', Type_update_view.as_view(), name='type_update'),
-    path('type/<int:pk>/delete', Type_delete_view.as_view(), name='type_delete')
-
-
+    path('type/create/', TypeCreateView.as_view(), name='type_create'),
+    path('type/<int:pk>/edit/', TypeUpdateView.as_view(), name='type_update'),
+    path('type/<int:pk>/delete', TypeDeleteView.as_view(), name='type_delete'),
+    path('projects/', ProjectIndexView.as_view(), name='project_index'),
+    path('project/<int:pk>/', ProjectView.as_view(), name='project_view'),
+    path('project/create/', ProjectCreateView.as_view(), name='project_create'),
+    path('project/<int:pk>/edit/', ProjectUpdateView.as_view(), name='project_update'),
+    path('project/<int:pk>/delete', ProjectDeleteView.as_view(), name='project_delete')
 ]
