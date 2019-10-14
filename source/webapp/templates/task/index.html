@@ -9,6 +9,7 @@
 {% endblock %}
 {% block content %}
     <h1 class="zagolovok mt-3 mb-3">Issue tracker</h1>
+     {% include 'partial/simple_search.html' %}
     <p class="text-center"><a href="{% url 'status_index' %}">Statuses</a><br><a href="{% url 'type_index' %}">Types</a></p>
     {% if is_paginated %}
         {% include 'partial/pagination.html' %}

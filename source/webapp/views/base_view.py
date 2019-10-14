@@ -1,5 +1,7 @@
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, render, redirect
-from django.views.generic import TemplateView
+from django.utils.http import urlencode
+from django.views.generic import TemplateView, ListView
 from django.views.generic.base import View
 
 
@@ -65,7 +67,6 @@ class DeleteView(View):
 
     def get_redirect_url(self):
         return self.redirect_url
-
 
 
 

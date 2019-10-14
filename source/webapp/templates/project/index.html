@@ -6,6 +6,7 @@
 {% endblock %}
 {% block content %}
     <h1 class="zagolovok mt-3 mb-3 proj">Projects</h1>
+         {% include 'partial/simple_search.html' %}
     {% if is_paginated %}
         {% include 'partial/pagination.html' %}
     {% endif %}
