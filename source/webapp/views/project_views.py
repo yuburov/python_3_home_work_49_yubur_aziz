@@ -5,6 +5,8 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from webapp.forms import ProjectForm, ProjectTaskForm, SimpleSearchForm
 from webapp.models import Project
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 class ProjectIndexView(ListView):
     template_name = 'project/index.html'
@@ -63,7 +65,7 @@ class ProjectView(DetailView):
         context['tasks'] = page.object_list
         context['is_paginated'] = page.has_other_pages()
 
-class ProjectCreateView(CreateView):
+class ProjectCreateView(LoginRequiredMixin, CreateView):
     template_name = 'project/create.html'
     form_class = ProjectForm
     model = Project
@@ -71,7 +73,7 @@ class ProjectCreateView(CreateView):
     def get_success_url(self):
         return reverse('project_view', kwargs={'pk': self.object.pk})
 
-class ProjectUpdateView(UpdateView):
+class ProjectUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'project/update.html'
     form_class = ProjectForm
     model = Project
@@ -81,7 +83,7 @@ class ProjectUpdateView(UpdateView):
         return reverse('project_view', kwargs={'pk': self.object.pk})
 
 
-class ProjectDeleteView(DeleteView):
+class ProjectDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'project/delete.html'
     context_object_name = 'project'
     model = Project

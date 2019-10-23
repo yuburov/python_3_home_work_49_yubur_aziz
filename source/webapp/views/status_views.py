@@ -3,6 +3,8 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from webapp.forms import StatusForm
 from webapp.models import Status
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 
 class StatusIndexView(ListView):
@@ -11,7 +13,7 @@ class StatusIndexView(ListView):
     model = Status
 
 
-class StatusCreateView(CreateView):
+class StatusCreateView(LoginRequiredMixin, CreateView):
     template_name = 'status/create_status.html'
     form_class = StatusForm
     model = Status
@@ -19,7 +21,7 @@ class StatusCreateView(CreateView):
     def get_success_url(self):
         return reverse('status_index')
 
-class StatusUpdateView(UpdateView):
+class StatusUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'status/update_status.html'
     form_class = StatusForm
     model = Status
@@ -28,7 +30,7 @@ class StatusUpdateView(UpdateView):
     def get_success_url(self):
         return reverse('status_index')
 
-class StatusDeleteView(DeleteView):
+class StatusDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'status/delete_status.html'
     context_object_name = 'status'
     model = Status
