@@ -7,6 +7,7 @@ from webapp.forms import TaskForm, SimpleSearchForm
 from webapp.models import Task
 
 
+
 class IndexView(ListView):
     template_name = 'task/index.html'
     context_object_name = 'tasks'

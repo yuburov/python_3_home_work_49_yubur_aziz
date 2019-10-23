@@ -23,6 +23,11 @@
                 <a href="{% url 'index' %}" class="nav-link">Home</a>
             </li>
             {% block menu %}{% endblock %}
+        {% if request.user.is_authenticated %}
+            <li class="nav-item log"><a href="{% url 'accounts:logout'  %}" class="nav-link">Log Out</a></li>
+        {% else %}
+            <li class="nav-item log"><a href="{% url 'accounts:login'  %}" class="nav-link">Log In</a></li>
+            {% endif %}
         </ul>
     </div>
 </nav>
