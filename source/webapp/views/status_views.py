@@ -19,7 +19,7 @@ class StatusCreateView(LoginRequiredMixin, CreateView):
     model = Status
 
     def get_success_url(self):
-        return reverse('status_index')
+        return reverse('webapp:status_index')
 
 class StatusUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'status/update_status.html'
@@ -28,10 +28,10 @@ class StatusUpdateView(LoginRequiredMixin, UpdateView):
     context_object_name = 'status'
 
     def get_success_url(self):
-        return reverse('status_index')
+        return reverse('webapp:status_index')
 
 class StatusDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'status/delete_status.html'
     context_object_name = 'status'
     model = Status
-    success_url = reverse_lazy('status_index')
+    success_url = reverse_lazy('webapp:status_index')

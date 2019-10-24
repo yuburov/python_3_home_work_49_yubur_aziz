@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 {% block menu %}
         <li class="nav-item">
-            <a href="{% url 'type_create' %}" class="nav-link">Create</a>
+            <a href="{% url 'webapp:type_create' %}" class="nav-link">Create</a>
         </li>
 {% endblock %}
 {% block content %}
     <h1 class="zagolovok mt-3 mb-3">Types</h1>
     {% for type in types %}
         <p> Type - {{ type.type }} <a class="icon mr-2"
-                                           href="{% url 'type_update' type.pk %}"><i
-                class="fas fa-edit"></i></a><a class="icon mr-2" href="{% url 'type_delete' type.pk %}"><i
+                                           href="{% url 'webapp:type_update' type.pk %}"><i
+                class="fas fa-edit"></i></a><a class="icon mr-2" href="{% url 'webapp:type_delete' type.pk %}"><i
                 class="fas fa-trash-alt"></i></a></p>
     {% endfor %}
 {% endblock %}

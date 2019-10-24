@@ -38,7 +38,7 @@ class Task_create_view(View):
                     type=form.cleaned_data['type']
 
                 )
-                return redirect('index')
+                return redirect('webapp:index')
             else:
                 return render(request, 'task/create.html', context={'form': form})
 
@@ -63,7 +63,7 @@ class Task_update_view(View):
             task.status = form.cleaned_data['status']
             task.type = form.cleaned_data['type']
             task.save()
-            return redirect('index')
+            return redirect('webapp:index')
         else:
             return render(request, 'task/update.html', context={'form': form, 'task': task})
 
@@ -76,7 +76,7 @@ class Task_delete_view(View):
         task_pk = kwargs.get('pk')
         task = get_object_or_404(Task, pk=task_pk)
         task.delete()
-        return redirect('index')
+        return redirect('webapp:index')
 
 
 class TypeIndexView(TemplateView):
@@ -97,7 +97,7 @@ class Type_create_view(View):
                 Type.objects.create(
                     type=form.cleaned_data['type']
                 )
-                return redirect('type_index')
+                return redirect('webapp:type_index')
             else:
                 return render(request, 'type/create_type.html', context={'form': form})
 
@@ -116,7 +116,7 @@ class Type_update_view(View):
         if form.is_valid():
             type.type = form.cleaned_data['type']
             type.save()
-            return redirect('type_index')
+            return redirect('webapp:type_index')
         else:
             return render(request, 'type/update_type.html', context={'form': form, 'type': type})
 
@@ -130,7 +130,7 @@ class Type_delete_view(View):
         type = get_object_or_404(Type, pk=type_pk)
         try:
             type.delete()
-            return redirect('type_index')
+            return redirect('webapp:type_index')
         except:
             raise Exception('Can not be deleted')
 
@@ -152,7 +152,7 @@ class Status_create_view(View):
                 Status.objects.create(
                     status=form.cleaned_data['status'],
                 )
-                return redirect('status_index')
+                return redirect('webapp:status_index')
             else:
                 return render(request, 'status/create_status.html', context={'form': form})
 
@@ -171,7 +171,7 @@ class Status_update_view(View):
         if form.is_valid():
             status.status = form.cleaned_data['status']
             status.save()
-            return redirect('status_index')
+            return redirect('webapp:status_index')
         else:
             return render(request, 'status/update_status.html', context={'form': form, 'status': status})
 
@@ -185,6 +185,6 @@ class Status_delete_view(View):
         status = get_object_or_404(Status, pk=status_pk)
         try:
             status.delete()
-            return redirect('status_index')
+            return redirect('webapp:status_index')
         except:
             raise Exception('Can not be deleted')

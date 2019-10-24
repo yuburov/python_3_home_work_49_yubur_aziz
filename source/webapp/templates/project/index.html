@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block menu %}
     <li class="nav-item">
-        <a href="{% url 'project_create' %}" class="nav-link">Create</a>
+        <a href="{% url 'webapp:project_create' %}" class="nav-link">Create</a>
     </li>
 {% endblock %}
 {% block content %}
@@ -13,9 +13,9 @@
     {% for project in projects %}
         <div class="card w-75 mb-3 text-center">
             <div class="card-body">
-                <h5 class="card-title"><a href="{% url 'project_view' project.pk %}">{{ project.name }}</a> <a class="icon mr-2"
-                                                                               href="{% url 'project_update' project.pk %}"><i
-                        class="fas fa-edit"></i></a><a class="icon mr-2" href="{% url 'project_delete' project.pk %}"><i
+                <h5 class="card-title"><a href="{% url 'webapp:project_view' project.pk %}">{{ project.name }}</a> <a class="icon mr-2"
+                                                                               href="{% url 'webapp:project_update' project.pk %}"><i
+                        class="fas fa-edit"></i></a><a class="icon mr-2" href="{% url 'webapp:project_delete' project.pk %}"><i
                         class="fas fa-trash-alt"></i></a></h5>
                <p class="date"><b>Created at {{ project.create_date|date:'d.m.Y H:i:s' }}</b></p>
             </div>

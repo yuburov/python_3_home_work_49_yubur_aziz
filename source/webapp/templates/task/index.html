@@ -1,25 +1,25 @@
 {% extends 'base.html' %}
 {% block menu %}
     <li class="nav-item">
-        <a href="{% url 'task_create' %}" class="nav-link">Create</a>
+        <a href="{% url 'webapp:task_create' %}" class="nav-link">Create</a>
     </li>
     <li class="nav-item">
-        <a href="{% url 'project_index' %}" class="nav-link">Projects</a>
+        <a href="{% url 'webapp:project_index' %}" class="nav-link">Projects</a>
     </li>
 {% endblock %}
 {% block content %}
     <h1 class="zagolovok mt-3 mb-3">Issue tracker</h1>
      {% include 'partial/simple_search.html' %}
-    <p class="text-center"><a href="{% url 'status_index' %}">Statuses</a><br><a href="{% url 'type_index' %}">Types</a></p>
+    <p class="text-center"><a href="{% url 'webapp:status_index' %}">Statuses</a><br><a href="{% url 'webapp:type_index' %}">Types</a></p>
     {% if is_paginated %}
         {% include 'partial/pagination.html' %}
     {% endif %}
     {% for task in tasks %}
         <div class="card w-75 mb-3 text-center">
             <div class="card-body">
-                <h5 class="card-title"><a href="{% url 'task_view' task.pk %}">{{ task.summary }}</a> <a class="icon mr-2"
-                                                                               href="{% url 'task_update' task.pk %}"><i
-                        class="fas fa-edit"></i></a><a class="icon mr-2" href="{% url 'task_delete' task.pk %}"><i
+                <h5 class="card-title"><a href="{% url 'webapp:task_view' task.pk %}">{{ task.summary }}</a> <a class="icon mr-2"
+                                                                               href="{% url 'webapp:task_update' task.pk %}"><i
+                        class="fas fa-edit"></i></a><a class="icon mr-2" href="{% url 'webapp:task_delete' task.pk %}"><i
                         class="fas fa-trash-alt"></i></a></h5>
                 <p class="card-text"> Status: {{ task.status }}<br> Type:{{ task.type }}</p>
             </div>

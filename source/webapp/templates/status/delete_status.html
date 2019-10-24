@@ -4,9 +4,9 @@
 
 {% block content %}
     <h1 class="text-center">Are you sure you want to delete - {{ status }}?</h1>
-    <form method="POST"  class="text-center" action="{% url 'status_delete' status.pk %}">
+    <form method="POST"  class="text-center" action="{% url 'webapp:status_delete' status.pk %}">
         {% csrf_token %}
         <p><input type="submit" class="btn btn-danger" value="Yes"></p>
-        <p><a href="{% url 'index' %}" class="no btn btn-primary">No</a></p>
+        <p><a href="{% url 'webapp:index' %}" class="no btn btn-primary">No</a></p>
     </form>
 {% endblock %}

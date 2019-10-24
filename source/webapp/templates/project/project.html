@@ -4,10 +4,10 @@
 
 {% block menu %}
      <li class="nav-item">
-        <a href="{% url 'project_update' projects.pk %}" class="nav-link">Edit</a>
+        <a href="{% url 'webapp:project_update' projects.pk %}" class="nav-link">Edit</a>
     </li>
     <li class="nav-item">
-        <a href="{% url 'project_delete' projects.pk %}" class="nav-link">Delete</a>
+        <a href="{% url 'webapp:project_delete' projects.pk %}" class="nav-link">Delete</a>
     </li>
 {% endblock %}
 
@@ -27,8 +27,8 @@
                 <p><b>{{ task.summary }} created at {{ task.date_create|date:'d.m.Y H:i:s' }}</b></p>
                 <div class="pre">{{ task.description }}</div>
                     <p class="comment-links">
-                        <a href="{% url 'task_update' task.pk %}">Edit</a>
-                        <a href="{% url 'task_delete' task.pk %}">Delete</a>
+                        <a href="{% url 'webapp:task_update' task.pk %}">Edit</a>
+                        <a href="{% url 'webapp:task_delete' task.pk %}">Delete</a>
                     </p>
             </div>
         {% empty %}
