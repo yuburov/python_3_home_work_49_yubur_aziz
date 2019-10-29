@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %} {{ user_obj.username }}{% endblock %}
+{% block menu %}
+    {% if user_obj == request.user %}
+        <li class="nav-item"><a href="{% url 'accounts:user_detail' user_obj.pk %}" class="nav-link">Edit</a> </li>
+        <li class="nav-item"><a href="#" class="nav-link">Change password</a></li>
+    {% endif %}
+{% endblock %}
+{% block content %}
+    <h1>Edit Profile: {{ user_obj.username }}</h1>
+    <form action="{% url 'accounts:user_update' user_obj.pk %}" method="post">
+        {% include 'partial/task_form.html' with button_text='Update profile' %}
+    </form>
+{% endblock %}

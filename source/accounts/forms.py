@@ -43,3 +43,8 @@ class UserCreationForm(forms.Form):
         except User.DoesNotExist:
             return username
 
+class UserChangeForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']
+
