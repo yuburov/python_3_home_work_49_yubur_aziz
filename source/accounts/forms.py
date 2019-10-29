@@ -48,3 +48,36 @@ class UserChangeForm(forms.ModelForm):
         model = User
         fields = ['first_name', 'last_name', 'email']
 
+class UserChangePasswordForm(forms.ModelForm):
+    password = forms.CharField(max_length=100, required=True, label='New password', widget=forms.PasswordInput)
+    password_confirm = forms.CharField(max_length=100, required=True, label='Password confirm',
+                                       widget=forms.PasswordInput)
+    old_password = forms.CharField(max_length=100, required=True, label='Old password', widget=forms.PasswordInput)
+
+    def clean(self):
+        super().clean()
+        password_1 = self.cleaned_data['password']
+        password_2 = self.cleaned_data['password_confirm']
+        if password_1 != password_2:
+            raise ValidationError('Passwords do not match',
+                                  code='passwords_do_not_match')
+        return self.cleaned_data
+
+    def clean_old_password(self):
+        old_password = self.cleaned_data.get('old_password')
+        user = self.instance
+        if not user.check_password(old_password):
+            raise ValidationError('Invailid password', code='Invalid password')
+        return old_password
+
+    def save(self, commit=True):
+        user = self.instance
+        user.set_password(self.cleaned_data['password'])
+        if commit:
+            user.save()
+        return user
+
+    class Meta:
+        model = User
+        fields = ['password', 'password_confirm', 'old_password']
+
