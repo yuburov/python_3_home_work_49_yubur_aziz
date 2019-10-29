@@ -20,7 +20,7 @@ class UserCreationForm(forms.Form):
         if password_1 != password_2:
             raise ValidationError('Passwords do not match',
                                   code='passwords_do_not_match')
-        if not first_name and  not last_name:
+        if not first_name and not last_name:
             raise ValidationError('Please fill in one of this fields: first name, last name',
                                   code='empty field')
         return self.cleaned_data

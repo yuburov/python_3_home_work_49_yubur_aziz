@@ -18,9 +18,7 @@ body{
 .icon{
     float: right;
 }
-.log{
-    margin-left: 850px;
-}
+
 .form-error {
     color: red;
     font-size: 12px;
@@ -120,4 +118,7 @@ span{
 }
 .date{
     margin-right: 40px;
+}
+.log{
+    margin-left: 850px;
 }

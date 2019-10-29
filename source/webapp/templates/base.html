@@ -18,16 +18,16 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav menu">
             <li class="nav-item">
                 <a href="{% url 'webapp:index' %}" class="nav-link">Home</a>
             </li>
             {% block menu %}{% endblock %}
         {% if request.user.is_authenticated %}
-            <li class="nav-item nav-link">Hi, {{ request.user }}!</li>
-            <li class="nav-item log"><a href="{% url 'accounts:logout'  %}" class="nav-link">Log Out</a></li>
+            <li class="nav-item menu-right log"><a href="{% url 'accounts:user_detail' request.user.pk %}" class="nav-link">Hi,{{ request.user }}!</a></li>
+            <li class="nav-item menu-right"><a href="{% url 'accounts:logout'  %}" class="nav-link">Log Out</a></li>
         {% else %}
-            <li class="nav-item log"><a href="{% url 'accounts:login'  %}" class="nav-link">Log In</a></li>
+            <li class="nav-item menu-right"><a href="{% url 'accounts:login'  %}" class="nav-link">Log In</a></li>
             <li class="nav-item"><a href="{% url 'accounts:register' %}" class="nav-link">Sign Up</a></li>
             {% endif %}
         </ul>
