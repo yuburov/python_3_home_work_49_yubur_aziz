@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.views.generic import DetailView, UpdateView
+from django.views.generic import ListView, DetailView, UpdateView
 
 from accounts.forms import UserCreationForm, UserChangeForm, UserChangePasswordForm
 
@@ -52,6 +52,13 @@ def register_view(request):
         else:
             return render(request, 'register.html', {'form': form})
 
+class UserListView(ListView):
+    model = User
+    template_name = 'user_list.html'
+    context_object_name = 'user_obj'
+    paginate_by = 5
+    paginate_orphans = 2
+
 class UserDetailView(DetailView):
     model = User
     template_name = 'user_detail.html'
@@ -80,3 +87,5 @@ class UserChangePassword(UserChangeView):
 
     def get_success_url(self):
         return reverse('accounts:login')
+
+

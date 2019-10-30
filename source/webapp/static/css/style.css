@@ -120,5 +120,7 @@ span{
     margin-right: 40px;
 }
 .log{
-    margin-left: 850px;
+    /*margin-left: 820px;*/
+    position: absolute;
+    right: 180px;
 }

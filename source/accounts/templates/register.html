@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
-
+{% block menu %}
+     <li class="nav-item">
+         <a href="{% url 'accounts:user_list' %}" class="nav-link">All users</a>
+     </li>
+{% endblock %}
 {% block content %}
     <h1 class="text-center" style="font-weight: bold">Sign Up</h1>
     <form action="{% url 'accounts:register' %}" method="post" class="text-center">

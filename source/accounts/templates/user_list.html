@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block menu %}
+     <li class="nav-item">
+         <a href="{% url 'webapp:project_index' %}" class="nav-link">Projects</a>
+     </li>
+{% endblock %}
+{% block content %}
+    <h1 class="text-center" style="font-weight: bold">Users</h1>
+    {% if is_paginated %}
+        {% include 'partial/pagination.html' %}
+    {% endif %}
+    <hr/>
+    {% for user in user_obj %}
+        <h2>{{ user.username }}</h2>
+        <p>
+            <a href="{% url 'accounts:user_detail' user.pk %}"
+               class="btn btn-primary btn-sm">Account overview</a>
+        </p>
+        <hr/>
+    {% endfor %}
+
+    {% if is_paginated %}
+        {% include 'partial/pagination.html' %}
+    {% endif %}
+{% endblock %}

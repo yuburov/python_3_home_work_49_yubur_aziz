@@ -2,7 +2,7 @@
 {% block title %} {{ user_obj.username }}{% endblock %}
 {% block menu %}
     {% if user_obj == request.user %}
-        <li class="nav-item"><a href="{% url 'accounts:user_detail' user_obj.pk %}" class="nav-link">Edit</a> </li>
+        <li class="nav-item"><a href="{% url 'accounts:user_detail' user_obj.pk %}" class="nav-link">Account</a> </li>
         <li class="nav-item"><a href="{% url 'accounts:user_change_password' user_obj.pk %}" class="nav-link">Change password</a></li>
     {% endif %}
 {% endblock %}
