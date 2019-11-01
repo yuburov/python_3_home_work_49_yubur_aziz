@@ -7,8 +7,13 @@
     {% endif %}
 {% endblock %}
 {% block content %}
-    <h1>Profile: {{ user_obj.username }}</h1>
-    <p>First name: <b>{{ user_obj.first_name }}</b></p>
+    <h1 class="text-center">Profile: {{ user_obj.username }}</h1>
+    {% if user_obj.profile.avatar %}
+        <p><img class="avatar" src="{{ user_obj.profile.avatar.url }}"></p>
+    {% endif %}
+    <p>First name: {{ user_obj.first_name }}</p>
     <p>Last name: {{ user_obj.last_name }}</p>
     <p>Email: {{ user_obj.email }}</p>
+    <p>About me: {{ user_obj.profile.about_me }}</p>
+    <p>GitHub profile: {{ user_obj.profile.github_profile }}</p>
 {% endblock %}
