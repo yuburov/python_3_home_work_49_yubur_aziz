@@ -2,6 +2,9 @@ from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
+from accounts.models import Profile
+
+
 class UserCreationForm(forms.Form):
     username = forms.CharField(max_length=100, required=True, label='Username')
     first_name = forms.CharField(max_length=100, required=False, label='First name')
@@ -44,9 +47,41 @@ class UserCreationForm(forms.Form):
             return username
 
 class UserChangeForm(forms.ModelForm):
+    avatar = forms.ImageField(label='Аватар', required=False)
+    about_me = forms.CharField(max_length=3000,label='О себе', required=False, widget=forms.Textarea)
+    github_profile = forms.URLField(label='Профиль на GitHub', required=False)
+
+    def get_initial_for_field(self, field, field_name):
+        if field_name in self.Meta.profile_fields:
+            return getattr(self.instance.profile, field_name)
+        return super().get_initial_for_field(field, field_name)
+
+    def save(self, commit=True):
+        user = super().save(commit=commit)
+        self.save_profile(commit)
+        return user
+
+    def save_profile(self, commit=True):
+        profile = Profile.objects.get_or_create(user=self.instance)[0]
+        for field in self.Meta.profile_fields:
+            setattr(profile, field, self.cleaned_data.get(field))
+        if not profile.avatar:
+            profile.avatar = None
+        if commit:
+            profile.save()
+
+
+    def clean_github_profile(self):
+        github_profile = self.cleaned_data.get('github_profile')
+        if not github_profile.startswith('http://github.com/') and github_profile is not '':
+            raise ValidationError('profile address is incorrect', code='wrong address')
+        return github_profile
+
+
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'email']
+        fields = ['first_name', 'last_name', 'email', 'avatar', 'about_me', 'github_profile']
+        profile_fields = ['avatar', 'about_me', 'github_profile']
 
 class UserChangePasswordForm(forms.ModelForm):
     password = forms.CharField(max_length=100, required=True, label='New password', widget=forms.PasswordInput)

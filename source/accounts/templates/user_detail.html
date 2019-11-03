@@ -10,10 +10,12 @@
     <h1 class="text-center">Profile: {{ user_obj.username }}</h1>
     {% if user_obj.profile.avatar %}
         <p><img class="avatar" src="{{ user_obj.profile.avatar.url }}"></p>
+    {% else %}
+            <p><img class="avatar" src="http://vovet.ru/uploads/img/87/2d2008efd304884c51cf7c6825e12bb8-650.jpg"></p>
     {% endif %}
-    <p>First name: {{ user_obj.first_name }}</p>
-    <p>Last name: {{ user_obj.last_name }}</p>
-    <p>Email: {{ user_obj.email }}</p>
-    <p>About me: {{ user_obj.profile.about_me }}</p>
-    <p>GitHub profile: {{ user_obj.profile.github_profile }}</p>
+    <b>First name:</b> {{ user_obj.first_name }}<br>
+    <b>Last name:</b> {{ user_obj.last_name }}<br>
+    <b>Email:</b> {{ user_obj.email }}<br>
+    <b>About me:</b> {{ user_obj.profile.about_me }}<br>
+    <b>GitHub profile:</b> {{ user_obj.profile.github_profile }}
 {% endblock %}
