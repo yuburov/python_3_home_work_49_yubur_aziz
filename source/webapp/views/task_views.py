@@ -4,8 +4,8 @@ from django.db.models import Q
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from webapp.forms import TaskForm, SimpleSearchForm
-from webapp.models import Task
-from django.contrib.auth.mixins import LoginRequiredMixin
+from webapp.models import Task, Project, Team
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
 class IndexView(ListView):
@@ -55,22 +55,34 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     form_class = TaskForm
     model = Task
 
+    # def get_form(self, form_class=None):
+    #     form = super().get_form(form_class=None)
+    #     form.fields['project'].queryset = Project.objects.filter(project_users=self.request.user.id)
+    #     return form
+
     def get_success_url(self):
         return reverse('webapp:task_view', kwargs={'pk': self.object.pk})
 
-
-class TaskUpdateView(LoginRequiredMixin,UpdateView):
+class TaskUpdateView(UserPassesTestMixin,UpdateView):
     template_name = 'task/update.html'
     form_class = TaskForm
     model = Task
     context_object_name = 'task'
 
+    def test_func(self):
+        obj = self.get_object()
+        return obj.project.project_users.filter(user=self.request.user)
+
     def get_success_url(self):
         return reverse('webapp:task_view', kwargs={'pk': self.object.pk})
 
 
-class TaskDeleteView(LoginRequiredMixin,DeleteView):
+class TaskDeleteView(UserPassesTestMixin,DeleteView):
     template_name = 'task/delete.html'
     context_object_name = 'task'
     model = Task
     success_url = reverse_lazy('webapp:index')
+
+    def test_func(self):
+        obj = self.get_object()
+        return obj.project.project_users.filter(user=self.request.user)
