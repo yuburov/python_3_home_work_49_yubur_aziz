@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 class Task(models.Model):
@@ -6,6 +7,8 @@ class Task(models.Model):
     status = models.ForeignKey('webapp.Status', related_name='tasks', on_delete=models.PROTECT, verbose_name='Статус')
     type = models.ForeignKey('webapp.Type', related_name='tasks', on_delete=models.PROTECT, verbose_name='Тип')
     date_create = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    created_by = models.ForeignKey(User, null=True, blank=True, related_name='tasks_author', on_delete=models.PROTECT, verbose_name='Автор задачи')
+    assigned_to = models.ForeignKey(User, null=True, blank=True, related_name='tasks_executor', on_delete=models.PROTECT, verbose_name='Исполнитель задачи')
     project = models.ForeignKey('webapp.Project', null= True, blank=False, related_name='tasks', on_delete=models.PROTECT,verbose_name='Проект')
 
     def __str__(self):
