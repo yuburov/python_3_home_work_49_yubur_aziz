@@ -20,7 +20,7 @@
     {% for task in tasks %}
         <div class="card w-75 mb-3 text-center">
             <div class="card-body">
-                <h5 class="card-title"><a href="{% url 'webapp:task_view' task.pk %}">{{ task.summary }}</a> 
+                <h5 class="card-title"><a href="{% url 'webapp:task_view' task.pk %}">{{ task.summary }}</a>
                     <a class="icon mr-2" href="{% url 'webapp:task_update' task.pk %}">
                     <i class="fas fa-edit"></i></a><a class="icon mr-2" href="{% url 'webapp:task_delete' task.pk %}">
                     <i class="fas fa-trash-alt"></i></a></h5>

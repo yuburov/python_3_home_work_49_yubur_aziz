@@ -1,12 +1,14 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 
 from webapp.models import Status, Type, Task, Project
 
 class TaskForm(forms.ModelForm):
-    def __init__(self, project, **kwargs):
+    def __init__(self, project, user, **kwargs):
         super().__init__(**kwargs)
         self.fields['assigned_to'].queryset = User.objects.filter(user_projects__project__in = project)
+        self.fields['project'].queryset = Project.objects.filter(project_users__user=user)
 
     class Meta:
         model = Task

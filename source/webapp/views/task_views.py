@@ -67,6 +67,7 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs['project'] = Project.objects.filter(project_users__user=self.request.user)
+        kwargs['user'] = self.request.user
         return kwargs
 
     def get_success_url(self):
