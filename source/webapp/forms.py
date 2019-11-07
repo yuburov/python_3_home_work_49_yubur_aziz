@@ -1,11 +1,16 @@
 from django import forms
+from django.contrib.auth.models import User
+
 from webapp.models import Status, Type, Task, Project
 
 class TaskForm(forms.ModelForm):
+    def __init__(self, project, **kwargs):
+        super().__init__(**kwargs)
+        self.fields['assigned_to'].queryset = User.objects.filter(user_projects__project__in = project)
+
     class Meta:
         model = Task
-        exclude = []
-
+        exclude = ['created_by']
 
 class StatusForm(forms.ModelForm):
     class Meta:

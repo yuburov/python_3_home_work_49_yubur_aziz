@@ -24,7 +24,7 @@
     <div class="task-list">
         {% for task in tasks %}
             <div class="task">
-                <p><b>{{ task.summary }} created at {{ task.date_create|date:'d.m.Y H:i:s' }}</b></p>
+                <p><b>{{ task.summary }} created by {{ task.created_by }} at {{ task.date_create|date:'d.m.Y H:i:s' }}</b></p>
                 <div class="pre">{{ task.description }}</div>
                     <p class="comment-links">
                         <a href="{% url 'webapp:task_update' task.pk %}">Edit</a>

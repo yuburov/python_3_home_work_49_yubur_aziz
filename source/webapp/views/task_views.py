@@ -1,6 +1,8 @@
 from urllib.parse import urlencode
 
+from django.contrib.auth.models import User
 from django.db.models import Q
+from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from webapp.forms import TaskForm, SimpleSearchForm
@@ -55,10 +57,17 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     form_class = TaskForm
     model = Task
 
-    # def get_form(self, form_class=None):
-    #     form = super().get_form(form_class=None)
-    #     form.fields['project'].queryset = Project.objects.filter(project_users=self.request.user.id)
-    #     return form
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.created_by = self.request.user
+        self.object = form.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['project'] = Project.objects.filter(project_users__user=self.request.user)
+        return kwargs
 
     def get_success_url(self):
         return reverse('webapp:task_view', kwargs={'pk': self.object.pk})
@@ -69,9 +78,14 @@ class TaskUpdateView(UserPassesTestMixin,UpdateView):
     model = Task
     context_object_name = 'task'
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['project'] = Project.objects.filter(project_users__user=self.request.user)
+        return kwargs
+
     def test_func(self):
         obj = self.get_object()
-        return obj.project.project_users.filter(user=self.request.user)
+        return obj.project.project_users.filter(user=self.request.user) or self.request.user.is_superuser
 
     def get_success_url(self):
         return reverse('webapp:task_view', kwargs={'pk': self.object.pk})
@@ -85,4 +99,4 @@ class TaskDeleteView(UserPassesTestMixin,DeleteView):
 
     def test_func(self):
         obj = self.get_object()
-        return obj.project.project_users.filter(user=self.request.user)
+        return obj.project.project_users.filter(user=self.request.user) or self.request.user.is_superuser
