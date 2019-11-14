@@ -8,7 +8,7 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
 from webapp.forms import ProjectForm, ProjectTaskForm, SimpleSearchForm, TeamUpdateForm
 from webapp.models import Project, Team
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from datetime import datetime
 
 
@@ -69,10 +69,12 @@ class ProjectView(DetailView):
         context['tasks'] = page.object_list
         context['is_paginated'] = page.has_other_pages()
 
-class ProjectCreateView(LoginRequiredMixin, CreateView):
+class ProjectCreateView(PermissionRequiredMixin, CreateView):
     template_name = 'project/create.html'
     form_class = ProjectForm
     model = Project
+    permission_required = 'webapp.add_project'
+    permission_denied_message = 'Доступ ограничен'
 
     def form_valid(self, form):
         users = form.cleaned_data.pop('users')
@@ -86,25 +88,31 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse('webapp:project_view', kwargs={'pk': self.object.pk})
 
-class ProjectUpdateView(LoginRequiredMixin, UpdateView):
+class ProjectUpdateView(PermissionRequiredMixin, UpdateView):
     template_name = 'project/update.html'
     fields = ['name', 'description']
     model = Project
     context_object_name = 'project'
+    permission_required = 'webapp.change_project'
+    permission_denied_message = 'Доступ ограничен'
 
     def get_success_url(self):
         return reverse('webapp:project_view', kwargs={'pk': self.object.pk})
 
 
-class ProjectDeleteView(LoginRequiredMixin, DeleteView):
+class ProjectDeleteView(PermissionRequiredMixin, DeleteView):
     template_name = 'project/delete.html'
     context_object_name = 'project'
     model = Project
     success_url = reverse_lazy('webapp:project_index')
+    permission_required = 'webapp.delete_project'
+    permission_denied_message = 'Доступ ограничен'
 
-class ProjectTeamEditView(LoginRequiredMixin, FormView):
+class ProjectTeamEditView(PermissionRequiredMixin, FormView):
     template_name = 'project/edit_team.html'
     form_class = TeamUpdateForm
+    permission_required = 'webapp.change_team'
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -130,7 +138,7 @@ class ProjectTeamEditView(LoginRequiredMixin, FormView):
 
         for user in cleaned_users:
             Team.objects.create(user=user, project=self.project, start_date=datetime.now())
-            
+
         return redirect(self.get_success_url())
 
     def get_success_url(self):

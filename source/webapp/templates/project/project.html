@@ -3,15 +3,21 @@
 {% block title %}{{ projects.name }}{% endblock %}
 
 {% block menu %}
+    {% if perms.webapp.change_project %}
      <li class="nav-item">
         <a href="{% url 'webapp:project_update' projects.pk %}" class="nav-link">Edit</a>
     </li>
+    {% endif %}
+    {% if perms.webapp.delete_project %}
     <li class="nav-item">
         <a href="{% url 'webapp:project_delete' projects.pk %}" class="nav-link">Delete</a>
     </li>
+    {% endif %}
+    {% if perms.webapp.change_team %}
     <li class="nav-item">
-        <a href="{% url 'webapp:edit_team' projects.pk %}" class="nav-link">Add users</a>
+        <a href="{% url 'webapp:edit_team' projects.pk %}" class="nav-link">Change team</a>
     </li>
+    {% endif %}
 {% endblock %}
 
 {% block content %}

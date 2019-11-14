@@ -9,8 +9,8 @@
 </li>
 {% endblock %}
 {% block content %}
-    <h1>Add users</h1>
+    <h1>Change team</h1>
     <form action="{% url 'webapp:edit_team' project.pk %}" method="post">
-        {% include 'partial/task_form.html' with button_text='Add' %}
+        {% include 'partial/task_form.html' with button_text='change' %}
     </form>
 {% endblock %}

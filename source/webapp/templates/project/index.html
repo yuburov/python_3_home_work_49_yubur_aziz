@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 {% block menu %}
+    {% if perms.webapp.add_project %}
     <li class="nav-item">
         <a href="{% url 'webapp:project_create' %}" class="nav-link">Create</a>
     </li>
+    {% endif %}
 {% endblock %}
 {% block content %}
     <h1 class="zagolovok mt-3 mb-3 proj">Projects</h1>
@@ -13,10 +15,10 @@
     {% for project in projects %}
         <div class="card w-75 mb-3 text-center">
             <div class="card-body">
-                <h5 class="card-title"><a href="{% url 'webapp:project_view' project.pk %}">{{ project.name }}</a> <a class="icon mr-2"
+                <h5 class="card-title"><a href="{% url 'webapp:project_view' project.pk %}">{{ project.name }}</a> {% if perms.webapp.change_project %}<a class="icon mr-2"
                                                                                href="{% url 'webapp:project_update' project.pk %}"><i
-                        class="fas fa-edit"></i></a><a class="icon mr-2" href="{% url 'webapp:project_delete' project.pk %}"><i
-                        class="fas fa-trash-alt"></i></a></h5>
+                        class="fas fa-edit"></i></a>{% endif %}{% if perms.webapp.delete_project %}<a class="icon mr-2" href="{% url 'webapp:project_delete' project.pk %}"><i
+                        class="fas fa-trash-alt"></i></a>{% endif %}</h5>
                <p class="date"><b>Created at {{ project.create_date|date:'d.m.Y H:i:s' }}</b></p>
             </div>
         </div>

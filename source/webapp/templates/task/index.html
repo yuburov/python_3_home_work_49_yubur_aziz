@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 {% block menu %}
+    {% if perms.webapp.add_task %}
     <li class="nav-item">
         <a href="{% url 'webapp:task_create' %}" class="nav-link">Create</a>
     </li>
+    {% endif %}
     <li class="nav-item">
         <a href="{% url 'accounts:user_list' %}" class="nav-link">All users</a>
     </li>
@@ -21,9 +23,9 @@
         <div class="card w-75 mb-3 text-center">
             <div class="card-body">
                 <h5 class="card-title"><a href="{% url 'webapp:task_view' task.pk %}">{{ task.summary }}</a>
-                    <a class="icon mr-2" href="{% url 'webapp:task_update' task.pk %}">
-                    <i class="fas fa-edit"></i></a><a class="icon mr-2" href="{% url 'webapp:task_delete' task.pk %}">
-                    <i class="fas fa-trash-alt"></i></a></h5>
+                    {% if perms.webapp.change_task %}<a class="icon mr-2" href="{% url 'webapp:task_update' task.pk %}">
+                    <i class="fas fa-edit"></i></a>{% endif %}{% if perms.webapp.delete_task %}<a class="icon mr-2" href="{% url 'webapp:task_delete' task.pk %}">
+                    <i class="fas fa-trash-alt"></i></a>{% endif %}</h5>
                 <p class="card-text"> Status: {{ task.status }}<br> Type:{{ task.type }}</p>
             </div>
         </div>

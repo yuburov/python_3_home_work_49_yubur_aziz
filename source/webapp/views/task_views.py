@@ -8,7 +8,7 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from webapp.forms import TaskForm, SimpleSearchForm, ProjectTaskForm
 from webapp.models import Task, Project, Team
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, PermissionRequiredMixin
 
 
 class IndexView(ListView):
@@ -53,11 +53,12 @@ class TaskView(DetailView):
     context_key = 'task'
     model = Task
 
-class TaskCreateView(LoginRequiredMixin, CreateView):
+class TaskCreateView(PermissionRequiredMixin, CreateView):
     template_name = 'task/create.html'
     form_class = TaskForm
     model = Task
-
+    permission_required = 'webapp.add_task'
+    permission_denied_message = 'Доступ ограничен'
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.created_by = self.request.user
@@ -74,39 +75,15 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse('webapp:task_view', kwargs={'pk': self.object.pk})
 
-# class ProjectTaskCreateView(UserPassesTestMixin, CreateView):
-#     template_name = 'task/create.html'
-#     form_class = TaskForm
-#     model = Task
-#
-#     def form_valid(self, form):
-#         self.object = form.save(commit=False)
-#         self.object.created_by = self.request.user
-#         self.object.project = self.get_project()
-#         self.object = form.save()
-#         return HttpResponseRedirect(self.get_success_url())
-#
-#     def test_func(self):
-#
-#         return self.get_project().project_users.filter(user=self.request.user) or self.request.user.is_superuser
-#
-#     def get_project(self):
-#         return get_object_or_404(Project, pk = self.kwargs.get('pk'))
-#
-#     def get_form_kwargs(self):
-#         kwargs = super().get_form_kwargs()
-#         kwargs['project'] = Project.objects.filter(project_users__user=self.request.user)
-#         return kwargs
-#
-#     def get_success_url(self):
-#         return reverse('webapp:task_view', kwargs={'pk': self.object.pk})
 
 
-class TaskUpdateView(UserPassesTestMixin, UpdateView):
+class TaskUpdateView(PermissionRequiredMixin, UserPassesTestMixin, UpdateView):
     template_name = 'task/update.html'
     form_class = TaskForm
     model = Task
     context_object_name = 'task'
+    permission_required = 'webapp.change_task'
+    permission_denied_message = 'Доступ ограничен'
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -122,11 +99,13 @@ class TaskUpdateView(UserPassesTestMixin, UpdateView):
         return reverse('webapp:task_view', kwargs={'pk': self.object.pk})
 
 
-class TaskDeleteView(UserPassesTestMixin,DeleteView):
+class TaskDeleteView(PermissionRequiredMixin,UserPassesTestMixin,DeleteView):
     template_name = 'task/delete.html'
     context_object_name = 'task'
     model = Task
     success_url = reverse_lazy('webapp:index')
+    permission_required = 'webapp.delete_task'
+    permission_denied_message = 'Доступ ограничен'
 
     def test_func(self):
         obj = self.get_object()
