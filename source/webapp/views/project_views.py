@@ -129,13 +129,10 @@ class ProjectTeamEditView(PermissionRequiredMixin, FormView):
         self.project = get_object_or_404(Project, pk=self.kwargs['pk'])
         cleaned_users = form.cleaned_data.pop('team_users')
         initial_users = form.initial.get('team')
-
         team = Team.objects.filter(project=self.project)
-
         for user in team:
             user.end_date = datetime.now()
             user.save()
-
         for user in cleaned_users:
             Team.objects.create(user=user, project=self.project, start_date=datetime.now())
 
