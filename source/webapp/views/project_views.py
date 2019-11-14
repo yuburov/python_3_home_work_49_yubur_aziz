@@ -1,10 +1,12 @@
 from urllib.parse import urlencode
+
+from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from webapp.forms import ProjectForm, ProjectTaskForm, SimpleSearchForm, TeamEditForm
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
+from webapp.forms import ProjectForm, ProjectTaskForm, SimpleSearchForm, TeamUpdateForm
 from webapp.models import Project, Team
 from django.contrib.auth.mixins import LoginRequiredMixin
 from datetime import datetime
@@ -86,7 +88,7 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
 
 class ProjectUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'project/update.html'
-    form_class = ProjectForm
+    fields = ['name', 'description']
     model = Project
     context_object_name = 'project'
 
@@ -100,23 +102,39 @@ class ProjectDeleteView(LoginRequiredMixin, DeleteView):
     model = Project
     success_url = reverse_lazy('webapp:project_index')
 
-class ProjectTeamEditView(LoginRequiredMixin, UpdateView):
+class ProjectTeamEditView(LoginRequiredMixin, FormView):
     template_name = 'project/edit_team.html'
-    context_object_name = 'project'
-    form_class = TeamEditForm
-    model = Project
+    form_class = TeamUpdateForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['project'] = get_object_or_404(Project, pk=self.kwargs['pk'])
+        return context
+
+    def get_initial(self):
+        initial = super().get_initial()
+        self.project = get_object_or_404(Project, pk=self.kwargs['pk'])
+        initial['team'] = User.objects.filter(user_projects__project=self.project, user_projects__end_date=None)
+        return initial
 
     def form_valid(self, form):
-        users = form.cleaned_data.pop('users')
-        users_list = list(users)
-        self.object = form.save()
-        for user in users_list:
-            Team.objects.create(user=user, project=self.object, start_date=datetime.now())
+        self.project = get_object_or_404(Project, pk=self.kwargs['pk'])
+        cleaned_users = form.cleaned_data.pop('team_users')
+        initial_users = form.initial.get('team')
+
+        team = Team.objects.filter(project=self.project)
+
+        for user in team:
+            user.end_date = datetime.now()
+            user.save()
+
+        for user in cleaned_users:
+            Team.objects.create(user=user, project=self.project, start_date=datetime.now())
+            
         return redirect(self.get_success_url())
 
     def get_success_url(self):
-        return reverse('webapp:project_view', kwargs={'pk': self.object.pk})
-
+        return reverse('webapp:project_view', kwargs={'pk': self.project.pk})
 
 
 

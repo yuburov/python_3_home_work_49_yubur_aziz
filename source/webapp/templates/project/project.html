@@ -20,7 +20,9 @@
     <div class="pre">{{ projects.description }}</div>
     <h4 class="text-center mt-4"> Users</h4>
     {% for team in projects.project_users.all %}
-        <p>{{ team.user.username }}.  <b>Start date:</b> {{ team.start_date }}</p>
+        {% if team.end_date == None %}
+            <p>{{ team.user.username }}.  <b>Start date:</b> {{ team.start_date }}</p>
+        {% endif %}
         {% endfor %}
     <hr/>
     <h3 class="mt-5 text-center">Tasks:</h3>

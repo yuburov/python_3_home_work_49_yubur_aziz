@@ -35,11 +35,11 @@ class ProjectForm(forms.ModelForm):
         exclude = ['create_date', 'update_date', 'users']
 
 
-class TeamEditForm(forms.ModelForm):
-    users = forms.ModelMultipleChoiceField(queryset=User.objects.all())
-    class Meta:
-        model = Project
-        fields = []
+class TeamUpdateForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['team_users'] = forms.ModelMultipleChoiceField(queryset=User.objects.all(),
+                                                                   initial=self.initial.get('team'), required=False)
 
 class ProjectTaskForm(forms.ModelForm):
     class Meta:
