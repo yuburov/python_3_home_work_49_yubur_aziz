@@ -31,6 +31,8 @@ class Project(models.Model):
     description = models.TextField(max_length=2000, null=True, blank=True, verbose_name='Описание проекта')
     create_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     update_date = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
+    users = models.ManyToManyField(User, through='webapp.Team', through_fields=('project', 'user'),
+                                   related_name='projects', blank=True, verbose_name='Пользователи')
 
     def __str__(self):
        return self.name
@@ -40,8 +42,8 @@ class Team(models.Model):
                              verbose_name='Пользователь')
     project = models.ForeignKey('webapp.Project', related_name='project_users', on_delete=models.CASCADE,
                                 verbose_name='Проект')
-    start_date = models.DateField(verbose_name='Дата начала работы')
-    end_date = models.DateField(verbose_name='Дата окончания работы')
+    start_date = models.DateField(null=True, blank=True, verbose_name='Дата начала работы')
+    end_date = models.DateField(null=True, blank=True, verbose_name='Дата окончания работы')
 
     def __str__(self):
         return "{} | {}".format(self.user, self.project)

@@ -3,9 +3,10 @@ from urllib.parse import urlencode
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from webapp.forms import TaskForm, SimpleSearchForm
+from webapp.forms import TaskForm, SimpleSearchForm, ProjectTaskForm
 from webapp.models import Task, Project, Team
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
@@ -73,7 +74,35 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse('webapp:task_view', kwargs={'pk': self.object.pk})
 
-class TaskUpdateView(UserPassesTestMixin,UpdateView):
+# class ProjectTaskCreateView(UserPassesTestMixin, CreateView):
+#     template_name = 'task/create.html'
+#     form_class = TaskForm
+#     model = Task
+#
+#     def form_valid(self, form):
+#         self.object = form.save(commit=False)
+#         self.object.created_by = self.request.user
+#         self.object.project = self.get_project()
+#         self.object = form.save()
+#         return HttpResponseRedirect(self.get_success_url())
+#
+#     def test_func(self):
+#
+#         return self.get_project().project_users.filter(user=self.request.user) or self.request.user.is_superuser
+#
+#     def get_project(self):
+#         return get_object_or_404(Project, pk = self.kwargs.get('pk'))
+#
+#     def get_form_kwargs(self):
+#         kwargs = super().get_form_kwargs()
+#         kwargs['project'] = Project.objects.filter(project_users__user=self.request.user)
+#         return kwargs
+#
+#     def get_success_url(self):
+#         return reverse('webapp:task_view', kwargs={'pk': self.object.pk})
+
+
+class TaskUpdateView(UserPassesTestMixin, UpdateView):
     template_name = 'task/update.html'
     form_class = TaskForm
     model = Task
@@ -82,6 +111,7 @@ class TaskUpdateView(UserPassesTestMixin,UpdateView):
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs['project'] = Project.objects.filter(project_users__user=self.request.user)
+        kwargs['user'] = self.request.user
         return kwargs
 
     def test_func(self):

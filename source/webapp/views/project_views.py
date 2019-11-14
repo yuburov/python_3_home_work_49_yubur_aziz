@@ -1,11 +1,13 @@
 from urllib.parse import urlencode
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from webapp.forms import ProjectForm, ProjectTaskForm, SimpleSearchForm
-from webapp.models import Project
+from webapp.forms import ProjectForm, ProjectTaskForm, SimpleSearchForm, TeamEditForm
+from webapp.models import Project, Team
 from django.contrib.auth.mixins import LoginRequiredMixin
+from datetime import datetime
 
 
 class ProjectIndexView(ListView):
@@ -70,6 +72,15 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
     form_class = ProjectForm
     model = Project
 
+    def form_valid(self, form):
+        users = form.cleaned_data.pop('users')
+        users_list = list(users)
+        users_list.append(self.request.user)
+        self.object = form.save()
+        for user in users_list:
+            Team.objects.create(user=user, project=self.object, start_date=datetime.now())
+        return redirect(self.get_success_url())
+
     def get_success_url(self):
         return reverse('webapp:project_view', kwargs={'pk': self.object.pk})
 
@@ -88,3 +99,27 @@ class ProjectDeleteView(LoginRequiredMixin, DeleteView):
     context_object_name = 'project'
     model = Project
     success_url = reverse_lazy('webapp:project_index')
+
+class ProjectTeamEditView(LoginRequiredMixin, UpdateView):
+    template_name = 'project/edit_team.html'
+    context_object_name = 'project'
+    form_class = TeamEditForm
+    model = Project
+
+    def form_valid(self, form):
+        users = form.cleaned_data.pop('users')
+        users_list = list(users)
+        self.object = form.save()
+        for user in users_list:
+            Team.objects.create(user=user, project=self.object, start_date=datetime.now())
+        return redirect(self.get_success_url())
+
+    def get_success_url(self):
+        return reverse('webapp:project_view', kwargs={'pk': self.object.pk})
+
+
+
+
+
+
+

@@ -2,7 +2,8 @@ from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
-from webapp.models import Status, Type, Task, Project
+from webapp.models import Status, Type, Task, Project, Team
+
 
 class TaskForm(forms.ModelForm):
     def __init__(self, project, user, **kwargs):
@@ -13,6 +14,7 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         exclude = ['created_by']
+
 
 class StatusForm(forms.ModelForm):
     class Meta:
@@ -26,14 +28,24 @@ class TypeForm(forms.ModelForm):
         exclude = []
 
 class ProjectForm(forms.ModelForm):
+    users = forms.ModelMultipleChoiceField(queryset = User.objects.all())
+
     class Meta:
         model = Project
-        exclude = ['create_date', 'update_date']
+        exclude = ['create_date', 'update_date', 'users']
+
+
+class TeamEditForm(forms.ModelForm):
+    users = forms.ModelMultipleChoiceField(queryset=User.objects.all())
+    class Meta:
+        model = Project
+        fields = []
 
 class ProjectTaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ['summary', 'description']
+
 
 class SimpleSearchForm(forms.Form):
     search = forms.CharField(max_length=100, required=False, label="Найти")
