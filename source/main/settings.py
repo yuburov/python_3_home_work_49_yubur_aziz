@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'widget_tweaks',
     'webapp',
-    'accounts'
+    'accounts',
+    'api',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [

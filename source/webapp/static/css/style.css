@@ -7,7 +7,7 @@ body{
     background-color: lightblue;
 }
 .zagolovok{
-    margin-left: 390px;
+    margin-left: 230px;
 }
 .card-text{
     margin-right: 50px;
@@ -62,8 +62,14 @@ span{
 .text-center{
     margin-right: 100px;
 }
+.zagol{
+    margin-left: 320px;
+}
+.linki{
+    margin-left: 50px;
+}
 .pagination {
-    margin-left: 280px;
+    margin-left: 230px;
     margin-bottom: 20px;
 }
 
@@ -114,7 +120,7 @@ span{
     margin: 5px 0 0;
 }
 .proj{
-    margin-left: 425px;
+    margin-left: 355px;
 }
 .date{
     margin-right: 40px;
@@ -130,4 +136,11 @@ span{
     width: 250px;
     height: auto;
     margin-right: 20px;
+}
+.text-center.mb-3 {
+    margin-left: 60px;
+
+}
+.card.w-75{
+    margin-left: 100px;
 }

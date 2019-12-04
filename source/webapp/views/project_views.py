@@ -8,7 +8,7 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
 from webapp.forms import ProjectForm, ProjectTaskForm, SimpleSearchForm, TeamUpdateForm
 from webapp.models import Project, Team
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from datetime import datetime
 
 
@@ -128,7 +128,7 @@ class ProjectTeamEditView(PermissionRequiredMixin, FormView):
     def form_valid(self, form):
         self.project = get_object_or_404(Project, pk=self.kwargs['pk'])
         cleaned_users = form.cleaned_data.pop('team_users')
-        initial_users = form.initial.get('team')
+        # initial_users = form.initial.get('team')
         team = Team.objects.filter(project=self.project)
         for user in team:
             user.end_date = datetime.now()

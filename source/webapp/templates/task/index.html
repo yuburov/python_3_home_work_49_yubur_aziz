@@ -10,11 +10,11 @@
     </li>
 {% endblock %}
 {% block content %}
-    <h1 class="zagolovok mt-3 mb-3">Issue tracker</h1>
+    <h1 class="zagol mt-3 mb-3">Issue tracker</h1>
     {% include 'partial/simple_search.html' %}
-    <p class="text-center"><a href="{% url 'webapp:status_index' %}">Statuses</a>
-        <br><a href="{% url 'webapp:type_index' %}">Types</a><br>
-        <a href="{% url 'webapp:project_index' %}">Projects</a>
+    <p class="text-center"><a class="linki" href="{% url 'webapp:status_index' %}">Statuses</a>
+        <br><a class="linki" href="{% url 'webapp:type_index' %}">Types</a><br>
+        <a class="linki" href="{% url 'webapp:project_index' %}">Projects</a>
     </p>
     {% if is_paginated %}
         {% include 'partial/pagination.html' %}

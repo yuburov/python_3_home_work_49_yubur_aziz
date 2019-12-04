@@ -42,8 +42,12 @@
                 <p><b>{{ task.summary }} created by {{ task.created_by }} at {{ task.date_create|date:'d.m.Y H:i:s' }}</b></p>
                 <div class="pre">{{ task.description }}</div>
                     <p class="comment-links">
-                        <a href="{% url 'webapp:task_update' task.pk %}">Edit</a>
-                        <a href="{% url 'webapp:task_delete' task.pk %}">Delete</a>
+                        {% if perms.webapp.change_task %}
+                            <a href="{% url 'webapp:task_update' task.pk %}">Edit</a>
+                        {% endif %}
+                        {% if perms.webapp.delete_task %}
+                            <a href="{% url 'webapp:task_delete' task.pk %}">Delete</a>
+                        {% endif %}
                     </p>
             </div>
         {% empty %}
