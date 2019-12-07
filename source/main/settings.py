@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'webapp',
     'accounts',
     'api',
-    'rest_framework'
+    'rest_framework',
+    'rest_framework.authtoken'
 ]
 
 MIDDLEWARE = [
@@ -131,4 +132,10 @@ LOGIN_URL = reverse_lazy('accounts:login')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 
 MEDIA_URL = '/uploads/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+}
 
