@@ -4,14 +4,14 @@ from webapp.models import Task, Project
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
-        fields = ('id', 'summary', 'description', 'status', 'type', 'date_create',
+        fields = ('id', 'summary', 'description','status', 'type',
                   'created_by', 'assigned_to', 'project')
 
 
 class TaskProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
-        fields = ('id', 'summary', 'description', 'status', 'type', 'date_create',
+        fields = ('id', 'summary', 'description','status', 'type',
                   'created_by', 'assigned_to')
 
 class ProjectSerializer(serializers.ModelSerializer):
