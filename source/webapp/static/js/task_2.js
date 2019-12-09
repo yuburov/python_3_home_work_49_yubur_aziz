@@ -4,12 +4,10 @@ $.ajax({
     data: JSON.stringify({username: 'admin', password: 'admin'}),
     dataType: 'json',
     contentType: 'application/json',
-    success: function(response, status){console.log(response);},
+    success: function(response, status){console.log(response); localStorage.setItem('apiToken', response.token);},
     error: function(response, status){console.log(response);}
 
 });
-
-localStorage.setItem('api_token', '31b75631780099565f86aca21921daaf5555f683')
 
 $.ajax({
      url: 'http://localhost:8000/api/tasks/',
@@ -30,12 +28,11 @@ $.ajax({
 });
 
 $.ajax({
-     url: 'http://localhost:8000/api/projects/',
+     url: 'http://localhost:8000/api/projects/2',
      method: 'get',
      headers: {'Authorization': 'Token ' + localStorage.getItem('api_token')},
      dataType: 'json',
-     success: function(response, status) {for(let i=0;i<response.length;i++)
-        {console.log(response[i].tasks)}},
+     success: function(response, status) {console.log(response.tasks);},
      error: function(response, status){console.log(response);}
 });
 
